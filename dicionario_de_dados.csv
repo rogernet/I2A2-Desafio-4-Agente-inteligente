@@ -1,0 +1,31 @@
+Arquivo;Coluna;Descricao;Tipo
+Cabecalho;CHAVE DE ACESSO;Chave de acesso de 44 digitos que identifica unicamente a NF-e;Texto
+Cabecalho;MODELO;Modelo do documento fiscal (ex.: 55 = NF-e, 65 = NFC-e);Texto
+Cabecalho;SERIE;Serie da nota fiscal;Texto
+Cabecalho;NUMERO;Numero da nota fiscal;Texto
+Cabecalho;NATUREZA DA OPERACAO;Descricao da operacao (venda, remessa, devolucao, etc.);Texto
+Cabecalho;DATA EMISSAO;Data e hora de emissao da nota;Data
+Cabecalho;EVENTO MAIS RECENTE;Ultimo evento registrado na NF-e (autorizacao, cancelamento, etc.);Texto
+Cabecalho;DATA/HORA EVENTO MAIS RECENTE;Data e hora do evento mais recente;Data
+Cabecalho;CPF/CNPJ Emitente;Documento (CPF ou CNPJ) do emitente;Texto
+Cabecalho;RAZAO SOCIAL EMITENTE;Nome ou razao social do emitente (fornecedor);Texto
+Cabecalho;INSCRICAO ESTADUAL EMITENTE;Inscricao estadual do emitente;Texto
+Cabecalho;UF EMITENTE;Unidade federativa (estado) do emitente;Texto
+Cabecalho;MUNICIPIO EMITENTE;Municipio do emitente;Texto
+Cabecalho;CNPJ DESTINATARIO;Documento (CNPJ) do destinatario;Texto
+Cabecalho;NOME DESTINATARIO;Nome ou razao social do destinatario;Texto
+Cabecalho;UF DESTINATARIO;Unidade federativa (estado) do destinatario;Texto
+Cabecalho;INDICADOR IE DESTINATARIO;Indicador da inscricao estadual do destinatario;Texto
+Cabecalho;DESTINO DA OPERACAO;Destino da operacao (interna, interestadual ou exterior);Texto
+Cabecalho;CONSUMIDOR FINAL;Indica se a operacao e destinada a consumidor final;Texto
+Cabecalho;PRESENCA DO COMPRADOR;Modalidade de presenca do comprador na operacao;Texto
+Cabecalho;VALOR NOTA FISCAL;Valor total da nota fiscal em reais;Numerico
+Itens;NUMERO PRODUTO;Numero sequencial do item dentro da nota;Texto
+Itens;DESCRICAO DO PRODUTO/SERVICO;Descricao do produto ou servico do item;Texto
+Itens;CODIGO NCM/SH;Codigo NCM/SH de classificacao do produto;Texto
+Itens;NCM/SH (TIPO DE PRODUTO);Descricao do tipo de produto pela classificacao NCM/SH;Texto
+Itens;CFOP;Codigo Fiscal de Operacoes e Prestacoes;Texto
+Itens;QUANTIDADE;Quantidade do item na nota;Numerico
+Itens;UNIDADE;Unidade de medida do item (UN, CX, KG, etc.);Texto
+Itens;VALOR UNITARIO;Valor unitario do item em reais;Numerico
+Itens;VALOR TOTAL;Valor total do item em reais (quantidade x valor unitario);Numerico
