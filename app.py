@@ -36,7 +36,7 @@ st.markdown(
 
 st.markdown('<div class="brand">nota<span>.</span>ask</div>', unsafe_allow_html=True)
 st.markdown(
-    '<p class="subtle">Pergunte sobre suas notas fiscais em português. A resposta vem dos dados, não de um chute.</p>',
+    '<p class="subtle">Pergunte sobre suas notas fiscais em português.</p>',
     unsafe_allow_html=True,
 )
 
@@ -73,7 +73,7 @@ with tab_load:
                 st.text(st.session_state["dictionary_text"])
 
 with tab_query:
-    st.subheader("Fazer uma pergunta")
+    st.subheader("Faça uma pergunta")
 
     if not st.session_state["db_path"]:
         st.info("Carregue um arquivo na aba Carga para começar.")
