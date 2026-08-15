@@ -66,6 +66,17 @@ def _normalize_column(name, index: int) -> str:
     return text or f"col_{index}"
 
 
+def _tipo_amigavel(duckdb_type: str) -> str:
+    t = str(duckdb_type).upper()
+    if any(x in t for x in ("CHAR", "TEXT", "STRING")):
+        return "texto"
+    if any(x in t for x in ("INT", "DECIMAL", "DOUBLE", "REAL", "FLOAT", "NUMERIC", "HUGEINT")):
+        return "número"
+    if any(x in t for x in ("DATE", "TIME", "TIMESTAMP")):
+        return "data"
+    return str(duckdb_type).lower()
+
+
 def _slugify_table(name: str) -> str:
     stem = Path(name).stem.lower()
     stem = re.sub(r"[^a-z0-9]+", "_", stem).strip("_")
@@ -167,7 +178,7 @@ def process_zip(uploaded_bytes: bytes, work_dir: str | None = None) -> dict:
         os.remove(db_path)
 
     con = duckdb.connect(db_path)
-    schema_parts, used_names = [], set()
+    schema_parts, used_names, quality = [], set(), []
     try:
         for csv_path in csv_files:
             table = _slugify_table(csv_path)
@@ -200,6 +211,19 @@ def process_zip(uploaded_bytes: bytes, work_dir: str | None = None) -> dict:
             rows = con.execute(f'SELECT COUNT(*) FROM "{table}"').fetchone()[0]
             col_lines = "\n".join(f"  - {name} ({dtype})" for name, dtype in columns)
             schema_parts.append(f'Tabela "{table}" ({rows} linhas):\n{col_lines}')
+
+            col_quality = []
+            for name, dtype in columns:
+                serie = df[name].astype("string")
+                ausentes = int((serie.isna() | (serie.str.strip() == "")).sum())
+                col_quality.append({
+                    "coluna": name,
+                    "tipo": _tipo_amigavel(dtype),
+                    "ausentes": ausentes,
+                    "pct_ausentes": round(100 * ausentes / rows, 1) if rows else 0.0,
+                })
+            quality.append({"tabela": table, "linhas": rows,
+                            "colunas": len(columns), "detalhe": col_quality})
     finally:
         con.close()
 
@@ -208,5 +232,6 @@ def process_zip(uploaded_bytes: bytes, work_dir: str | None = None) -> dict:
         "schema_text": "\n\n".join(schema_parts),
         "dictionary_text": dictionary_text.strip(),
         "tables": sorted(used_names),
+        "quality": quality,
         "work_dir": work_dir,
     }

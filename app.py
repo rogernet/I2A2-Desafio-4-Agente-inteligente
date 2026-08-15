@@ -34,13 +34,13 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-st.markdown('<div class="brand">nota<span>|</span>ask</div>', unsafe_allow_html=True)
+st.markdown('<div class="brand">nota<span>.</span>ask</div>', unsafe_allow_html=True)
 st.markdown(
-    '<p class="subtle">Pergunte sobre suas notas fiscais em português.</p>',
+    '<p class="subtle">Pergunte sobre suas notas fiscais em português. A resposta vem dos dados, não de um chute.</p>',
     unsafe_allow_html=True,
 )
 
-for key in ("db_path", "schema_text", "dictionary_text", "tables"):
+for key in ("db_path", "schema_text", "dictionary_text", "tables", "quality"):
     st.session_state.setdefault(key, None)
 
 tab_load, tab_query = st.tabs(["Carga", "Consulta"])
@@ -68,12 +68,27 @@ with tab_load:
     if st.session_state["schema_text"]:
         st.markdown("**Estrutura carregada**")
         st.code(st.session_state["schema_text"], language="text")
+
+        if st.session_state.get("quality"):
+            st.markdown("**Qualidade dos dados**")
+            st.caption("Resumo do tratamento automático aplicado na carga: linhas, tipo detectado por coluna e valores ausentes.")
+            for q in st.session_state["quality"]:
+                cols = st.columns(3)
+                cols[0].metric("Tabela", q["tabela"])
+                cols[1].metric("Linhas", q["linhas"])
+                cols[2].metric("Colunas", q["colunas"])
+                detalhe = pd.DataFrame(q["detalhe"]).rename(columns={
+                    "coluna": "Coluna", "tipo": "Tipo detectado",
+                    "ausentes": "Ausentes", "pct_ausentes": "% ausentes",
+                })
+                st.dataframe(detalhe, use_container_width=True, hide_index=True)
+
         if st.session_state["dictionary_text"]:
             with st.expander("Dicionário de dados"):
                 st.text(st.session_state["dictionary_text"])
 
 with tab_query:
-    st.subheader("Faça uma pergunta")
+    st.subheader("Fazer uma pergunta")
 
     if not st.session_state["db_path"]:
         st.info("Carregue um arquivo na aba Carga para começar.")
