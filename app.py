@@ -36,7 +36,9 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-st.markdown('<div class="brand">nota<span> | </span>ask</div>', unsafe_allow_html=True)
+st.markdown(
+    '<div class="brand">nota<span> .:. </span>ask</div>', unsafe_allow_html=True
+)
 st.markdown(
     '<p class="subtle">Pergunte sobre suas notas fiscais em português.</p>',
     unsafe_allow_html=True,
