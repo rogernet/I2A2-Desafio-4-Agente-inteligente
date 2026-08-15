@@ -7,7 +7,9 @@ from agent import build_llm, answer_question
 
 load_dotenv()
 
-st.set_page_config(page_title="Consulta de Notas Fiscais", page_icon="▦", layout="wide")
+st.set_page_config(
+    page_title="Consulta Inteligente de Notas Fiscais", page_icon="▦", layout="wide"
+)
 
 st.markdown(
     """
@@ -34,9 +36,9 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-st.markdown('<div class="brand">nota<span>.</span>ask</div>', unsafe_allow_html=True)
+st.markdown('<div class="brand">nota<span>|</span>ask</div>', unsafe_allow_html=True)
 st.markdown(
-    '<p class="subtle">Pergunte sobre suas notas fiscais em português. A resposta vem dos dados, não de um chute.</p>',
+    '<p class="subtle">Pergunte sobre suas notas fiscais em português.</p>',
     unsafe_allow_html=True,
 )
 
@@ -71,16 +73,22 @@ with tab_load:
 
         if st.session_state.get("quality"):
             st.markdown("**Qualidade dos dados**")
-            st.caption("Resumo do tratamento automático aplicado na carga: linhas, tipo detectado por coluna e valores ausentes.")
+            st.caption(
+                "Resumo do tratamento automático aplicado na carga: linhas, tipo detectado por coluna e valores ausentes."
+            )
             for q in st.session_state["quality"]:
                 cols = st.columns(3)
                 cols[0].metric("Tabela", q["tabela"])
                 cols[1].metric("Linhas", q["linhas"])
                 cols[2].metric("Colunas", q["colunas"])
-                detalhe = pd.DataFrame(q["detalhe"]).rename(columns={
-                    "coluna": "Coluna", "tipo": "Tipo detectado",
-                    "ausentes": "Ausentes", "pct_ausentes": "% ausentes",
-                })
+                detalhe = pd.DataFrame(q["detalhe"]).rename(
+                    columns={
+                        "coluna": "Coluna",
+                        "tipo": "Tipo detectado",
+                        "ausentes": "Ausentes",
+                        "pct_ausentes": "% ausentes",
+                    }
+                )
                 st.dataframe(detalhe, use_container_width=True, hide_index=True)
 
         if st.session_state["dictionary_text"]:
