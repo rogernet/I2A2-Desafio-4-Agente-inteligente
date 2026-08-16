@@ -55,7 +55,7 @@ OpenAI ou Anthropic).
 
 ## Observações
 
-CSVs de notas fiscais brasileiras variam entre UTF-8 e latin-1, com separador `;`
+CSVs de notas fiscais que variam entre UTF-8 e latin-1, com separador `;`
 e decimal com vírgula. A ingestão detecta a codificação e o separador, normaliza os
 nomes de coluna (com transliteração de acentos) e ajusta os tipos automaticamente:
 identificadores como texto, valores e quantidades como número, datas como data.
