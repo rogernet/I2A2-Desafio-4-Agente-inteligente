@@ -59,8 +59,6 @@ CSVs de notas fiscais brasileiras variam entre UTF-8 e latin-1, com separador `;
 e decimal com vírgula. A ingestão detecta a codificação e o separador, normaliza os
 nomes de coluna (com transliteração de acentos) e ajusta os tipos automaticamente:
 identificadores como texto, valores e quantidades como número, datas como data.
-O ZIP pode incluir um dicionário de dados (ex.: `dicionario_de_dados.csv`), que é
-lido e usado como contexto pelo agente.
 
 ## Licença
 
