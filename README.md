@@ -37,9 +37,7 @@ ollama pull qwen2.5-coder:3b
 streamlit run app.py
 ```
 
-Para usar uma API, ajuste `LLM_PROVIDER` no `.env` para `openai` ou `anthropic`
-e preencha a chave correspondente.
-
+Para usar uma API, ajuste `LLM_PROVIDER` no `.env` e preencha a chave correspondente.
 ## Uso
 
 1. Aba **Carga**: suba o `.ZIP` (ex.: `202401_NFs.zip`) e clique em Processar.
